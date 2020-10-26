@@ -9,6 +9,8 @@ var stand1,stand2;
 var polygon;
 var slingShot;
 var polygon_img;
+var bgColor;
+var score = 0;
 function preload(){
   polygon_img=loadImage("polygon.png");
 }
@@ -61,13 +63,15 @@ function setup() {
   World.add(world,polygon);
   
   slingShot = new Slingshot(this.polygon,{x:100,y:200});
-
+  bgColor="white";
+  getBack();
 }
 function draw() {
-  background(56,44,44); 
- 
+  if(bgColor){
+  background(bgColor); 
+  text("SCORE: " + score, 740,40);
   //Engine.update(engine);
-  text(mouseX + ',' + mouseY, 10, 15);
+ // text(mouseX + ',' + mouseY, 10, 15);
   textSize(20);
   fill("lightyellow");
   text("Drag the polygon to destroy the blocks",300,30);
@@ -113,9 +117,36 @@ function draw() {
   fill("gold");
   imageMode(CENTER)
   image(polygon_img ,polygon.position.x,polygon.position.y,40,40);
-
-  slingShot.display();
   
+  blocks1.score();
+  blocks2.score();
+  blocks3.score();
+  blocks4.display();
+  blocks5.score();
+  blocks6.score();
+  blocks7.score();
+  blocks8.score();
+  blocks9.score();
+  
+  block1.score();
+  block2.score();
+  block3.score();
+  block4.display();
+  block5.score();
+  block6.score();
+  block7.score();
+  block8.score();
+  block9.score();
+  block10.score();
+  block11.score();
+  block12.score();
+  block13.display();
+  block14.score();
+  block15.score();
+  block16.score();
+  
+  slingShot.display();
+  }
 }
 function mouseDragged(){
   Matter.Body.setPosition(this.polygon,{x:mouseX,y:mouseY});
@@ -127,4 +158,17 @@ function keyPressed(){
   if(keyCode === 32){
       slingShot.attach(this.polygon);
   }
+}
+async function getBack(){
+  var response= await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
+  var respJSON = await response.json();
+  var dt = respJSON.datetime;
+  var hr =dt.slice(11,13);
+  if(hr>=06 && hr<=19){
+    bgColor="cyan";
+  }
+  else{
+    bgColor= "black"
+  }
+  console.log(bgColor)
 }
